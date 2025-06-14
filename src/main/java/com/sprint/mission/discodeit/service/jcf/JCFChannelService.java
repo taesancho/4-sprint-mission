@@ -4,7 +4,6 @@ import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.service.ChannelService;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class JCFChannelService implements ChannelService {
 
@@ -14,6 +13,7 @@ public class JCFChannelService implements ChannelService {
     private JCFChannelService () {
         this.data = new ArrayList<>();
     }
+
     public static JCFChannelService getInstance () {
         if (channelService == null) {
             channelService = new JCFChannelService();
@@ -28,21 +28,15 @@ public class JCFChannelService implements ChannelService {
 
     @Override
     public void findAllChannels() {
-        //            System.out.println("channelId :" + channel.getId());
-        //            System.out.println("channelCreateAt :" + channel.getFormattedCreatedAt());
-        //            System.out.println("channelUpdateAt :" + channel.getFormattedUpdatedAt());
-        //            System.out.println("channelName :" + channel.getChannelName());
-        //            System.out.println("users :" + channel.getUsers());
-        //            System.out.println("messages :" + channel.getMessages());
-        //            System.out.println("-----------------------------------------");
         data.forEach(channel -> System.out.println(channel.toString()));
     }
 
     @Override
-    public Optional<Channel> findChannelById(UUID id) {
+    public Channel findChannelById(UUID id) {
         return data.stream()
                 .filter(channel -> channel.getId().equals(id))
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("해당 ID의 채널이 없습니다."));
     }
 
     @Override

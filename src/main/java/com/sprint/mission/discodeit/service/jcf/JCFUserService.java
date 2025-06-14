@@ -29,20 +29,15 @@ public class JCFUserService implements UserService {
 
     @Override
     public void findAllUsers() {
-        //            System.out.println("userId :" + user.getId());
-        //            System.out.println("userCreateAt :" + user.getFormattedCreatedAt());
-        //            System.out.println("userUpdateAt :" + user.getFormattedUpdatedAt());
-        //            System.out.println("userName :" + user.getUserName());
-        //            System.out.println("channels :" + user.getChannels());
-        //            System.out.println("messages :" + user.getMessages());
         data.forEach(user -> System.out.println(user.toString()));
     }
 
     @Override
-    public Optional<User> findUserById(UUID id) {
+    public User findUserById(UUID id) {
         return data.stream()
                 .filter(user -> user.getId().equals(id))
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("해당 ID의 유저가 없습니다."));
     }
 
     @Override

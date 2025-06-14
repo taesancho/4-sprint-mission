@@ -4,7 +4,6 @@ import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.service.MessageService;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class JCFMessageService implements MessageService {
 
@@ -29,21 +28,15 @@ public class JCFMessageService implements MessageService {
 
     @Override
     public void findAllMessages() {
-        //            System.out.println("messageId :" + message.getId());
-        //            System.out.println("messageCreateAt :" + message.getFormattedCreatedAt());
-        //            System.out.println("messageUpdateAt :" + message.getFormattedUpdatedAt());
-        //            System.out.println("messageText :" + message.getText());
-        //            System.out.println("user :" + message.getUser());
-        //            System.out.println("channel :" + message.getChannel());
-        //            System.out.println("-----------------------------------------");
         data.forEach(message -> System.out.println(message.toString()));
     }
 
     @Override
-    public Optional<Message> findMessageById(UUID id) {
+    public Message findMessageById(UUID id) {
         return data.stream()
                 .filter(message -> message.getId().equals(id))
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("해당 ID의 메세지가 없습니다."));
     }
 
     @Override
